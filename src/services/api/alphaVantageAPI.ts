@@ -3,6 +3,10 @@ import Config from 'react-native-config';
 export const BASE_URL = Config.ALPHA_VANTAGE_BASE_URL || 'https://www.alphavantage.co/query';
 export const API_KEY = Config.ALPHA_VANTAGE_API_KEY;
 
+if (!API_KEY) {
+  console.warn('ALPHA_VANTAGE_API_KEY is not set in environment variables');
+}
+
 interface CompanyOverview {
   Symbol: string;
   AssetType: string;
@@ -11,13 +15,12 @@ interface CompanyOverview {
   Exchange: string;
   Country: string;
   Sector: string;
-  Industry: string;
-  // Add other fields as needed
+
 }
 
 interface CompanyLogo {
   logo: string;
-  // Add other fields as needed
+
 }
 
 export const fetchCompanyOverview = async (symbol: string): Promise<CompanyOverview | null> => {
@@ -90,12 +93,17 @@ export const fetchChartData = async (symbol: string, timeFilter: string): Promis
         interval = "5min";
     }
 
-    const params = new URLSearchParams({
-      function: functionName,
-      symbol,
-      apikey: API_KEY,
-      ...(interval && { interval }),
-    });
+    if (!API_KEY) {
+      return { data: [], error: 'API key is not configured' };
+    }
+
+    const params = new URLSearchParams();
+    params.append('function', functionName);
+    params.append('symbol', symbol);
+    params.append('apikey', API_KEY);
+    if (interval) {
+      params.append('interval', interval);
+    }
 
     const response = await fetch(`${BASE_URL}?${params.toString()}`);
     const data = await response.json();
@@ -114,7 +122,6 @@ export const fetchChartData = async (symbol: string, timeFilter: string): Promis
       value: parseFloat(values["4. close"]),
     }));
 
-    // Sort by date and limit to last 100 points for better performance
     return {
       data: chartData
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())

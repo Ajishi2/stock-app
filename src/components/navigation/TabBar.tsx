@@ -19,7 +19,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({
 }) => {
   const insets = useSafeAreaInsets();
   
-  // Early return if no routes are available
+
   if (!state?.routes?.length) {
     return null;
   }
@@ -51,8 +51,8 @@ const TabBar: React.FC<BottomTabBarProps> = ({
               onPress={onPress}
               style={[
                 styles.tabButton,
-                isFocused && styles.tabButtonActive, // apply active style
-                index !== state.routes.length - 1 && styles.tabDivider, // add divider except last
+                isFocused && styles.tabButtonActive, 
+                index !== state.routes.length - 1 && styles.tabDivider,
               ]}
             >
               <Text style={[styles.tabText, isFocused && styles.tabTextActive]}>
@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
   },
   tabButton: {
     flex: 1,
-    paddingVertical: 16,  // Increased from 12 to 16 for better touch targets
+    paddingVertical: 16,  
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 56,  // Added minimum height for better touch targets
+    minHeight: 56,  
   },
   tabButtonActive: {
     backgroundColor: '#33d49e',

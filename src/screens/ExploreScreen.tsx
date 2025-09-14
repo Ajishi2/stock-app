@@ -8,7 +8,6 @@ import StockGrid from '../components/stock/StockGrid';
 
 import { BASE_URL, API_KEY } from '../services/api/alphaVantageAPI';
 
-// --- Helper to fetch data ---
 const getTopGainersLosers = async () => {
   try {
     const url = `${BASE_URL}?function=TOP_GAINERS_LOSERS&apikey=${API_KEY}`;
@@ -58,7 +57,7 @@ const ExploreScreen = () => {
     );
   };
 
-  // Get filtered stocks
+
   const filteredGainers = filterStocks(topGainers, searchQuery);
   const filteredLosers = filterStocks(topLosers, searchQuery);
   const showSearchResults = searchQuery.length > 0;
@@ -70,12 +69,12 @@ const ExploreScreen = () => {
 
       const data = await getTopGainersLosers();
 
-      // Format stocks for display
+ 
       const formatStocks = (stocks: any[]) =>
         stocks.map((stock, index) => ({
           id: stock.ticker || index.toString(),
           name: stock.ticker,
-          companyName: stock.name, // Store company name for search
+          companyName: stock.name, 
           price: `$${stock.price}`,
           change: stock.change_percentage,
           changeAmount: stock.change_amount,
@@ -170,7 +169,6 @@ const ExploreScreen = () => {
                 </View>
               </View>
             ) : (
-              // Show regular sections when not searching
               <>
                 {/* Top Gainers Section */}
                 <View style={styles.section}>
@@ -272,6 +270,16 @@ const styles = StyleSheet.create({
   retryText: {
     color: 'white',
     fontWeight: '600',
+  },
+  noResultsContainer: {
+    padding: 16,
+    alignItems: 'center',
+    width: '100%',
+  },
+  noResultsText: {
+    color: '#94a3b8',
+    fontSize: 14,
+    textAlign: 'center',
   },
 });
 

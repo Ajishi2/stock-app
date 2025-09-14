@@ -1,4 +1,3 @@
-// Temporary hardcoded values for testing
 const API_KEY = '9FHTZTPZM6OWNKYW';
 const BASE_URL = 'https://www.alphavantage.co/query';
 

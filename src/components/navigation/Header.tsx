@@ -1,21 +1,34 @@
-// Header.tsx - Fixed version
+
 import React from 'react';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface HeaderProps {
   title: string;
-  showSearch?: boolean; // optional, defaults to false
-  onSearchChange?: (text: string) => void; // callback when text changes
-  searchValue?: string; // controlled input value
-  style?: any; // custom style prop
+  showSearch?: boolean;
+  onSearchChange?: (text: string) => void;
+  onBackPress?: () => void;
+  searchValue?: string;
+  style?: any;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, showSearch = false, onSearchChange, searchValue, style }) => {
+const Header: React.FC<HeaderProps> = ({ 
+  title, 
+  showSearch = false, 
+  onSearchChange, 
+  onBackPress,
+  searchValue, 
+  style 
+}) => {
   return (
     <SafeAreaView edges={['top']} style={[styles.safeArea, style]}>
       <View style={[styles.header, style]}>
-        <Text style={styles.title}>{title}</Text>
+        {onBackPress && (
+          <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
+            <Text style={styles.backButtonText}>←</Text>
+          </TouchableOpacity>
+        )}
+        <Text style={[styles.title, onBackPress && { marginLeft: 10 }]}>{title}</Text>
         {showSearch && (
           <TextInput
             style={styles.searchInput}
@@ -36,11 +49,19 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 16,
-    paddingVertical: 12, // Reduced from paddingBottom: 12
+    paddingVertical: 12, 
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    minHeight: 50, // Set a minimum height
+    minHeight: 50,
+  },
+  backButton: {
+    padding: 8,
+    marginRight: 4,
+  },
+  backButtonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   title: {
     color: 'white',

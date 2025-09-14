@@ -53,7 +53,6 @@ const WatchlistDetailScreen = () => {
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#FF6B35" />
         </View>
-        <TabBar />
       </View>
     )
   }

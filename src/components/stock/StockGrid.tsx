@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, FlatList, StyleSheet, Dimensions, TouchableOpacity, ViewStyle } from 'react-native';
 import StockCard from './StockCard';
 
 export interface Stock {
@@ -16,9 +16,10 @@ interface StockGridProps {
   stocks: Stock[];
   columns?: number; // configurable (default: 2)
   onStockPress?: (stock: Stock) => void;
+  style?: ViewStyle;
 }
 
-export default function StockGrid({ stocks, columns = 2, onStockPress }: StockGridProps) {
+export default function StockGrid({ stocks, columns = 2, onStockPress, style }: StockGridProps) {
   const screenWidth = Dimensions.get('window').width;
   const cardMargin = 12;
   const cardWidth = (screenWidth - cardMargin * (columns + 1)) / columns;
@@ -28,8 +29,8 @@ export default function StockGrid({ stocks, columns = 2, onStockPress }: StockGr
       data={stocks}
       keyExtractor={(item) => item.id}
       numColumns={columns}
+      contentContainerStyle={[styles.container, style]}
       columnWrapperStyle={[columns > 1 && styles.row, { marginTop: 0 }]}
-      contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
       renderItem={({ item }) => (
         <View style={{ margin: cardMargin / 2, width: cardWidth, alignItems: 'center' }}>

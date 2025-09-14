@@ -19,7 +19,7 @@ const ProductScreen = ({ navigation }: any) => {
   const route = useRoute<ProductScreenRouteProp>()
   const { symbol, companyName, price, low, high, fromViewAll, viewAllType } = route.params
   
-  // Hide the default header
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -27,21 +27,20 @@ const ProductScreen = ({ navigation }: any) => {
     });
   }, [navigation]);
 
-  // Handle back navigation
   const handleBackPress = () => {
     if (fromViewAll && viewAllType) {
-      // Go back to ViewAllScreen with the correct parameters
+ 
       navigation.navigate('ViewAllScreen', { 
         type: viewAllType,
         title: viewAllType === 'gainers' ? 'Top Gainers' : 
                viewAllType === 'losers' ? 'Top Losers' : 'Most Active'
       });
     } else {
-      // Default back navigation
+
       if (navigation.canGoBack()) {
         navigation.goBack();
       } else {
-        // Fallback to MainTabs if we can't go back
+  
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -70,12 +69,12 @@ const ProductScreen = ({ navigation }: any) => {
       setNewWatchlistName('');
     }
   };
-  // Fetch chart data on filter or symbol change
+
   useEffect(() => {
     fetchChartData()
   }, [symbol, timeFilter])
 
-  // Fetch company overview and logo
+
   useEffect(() => {
     fetchCompanyInfo()
     fetchCompanyLogo()
@@ -108,7 +107,7 @@ const ProductScreen = ({ navigation }: any) => {
       const prices = data
       let showCount = prices.length
       
-      // Adjust number of points to show based on time filter
+
       if (prices.length > 0) {
         switch (timeFilter) {
           case "1D":
@@ -130,11 +129,9 @@ const ProductScreen = ({ navigation }: any) => {
             showCount = Math.min(52, prices.length)
             break
         }
-        
-        // Get the subset of prices to display
+
         const pricesToShow = prices.slice(-showCount).map(p => p.value)
-        
-        // Calculate price change
+
         const priceChange = pricesToShow.length > 1 
           ? ((pricesToShow[pricesToShow.length - 1] - pricesToShow[0]) / pricesToShow[0]) * 100 
           : 0
@@ -177,7 +174,7 @@ const ProductScreen = ({ navigation }: any) => {
     }
   }
 
-  // Price change is now managed by state, no need for calculatePriceChange
+
 
   return (
     <View style={styles.container}>
@@ -186,7 +183,6 @@ const ProductScreen = ({ navigation }: any) => {
           title="Details Screen" 
           showSearch={false} 
           style={styles.headerStyle}
-          showBackButton={true}
           onBackPress={handleBackPress}
         />
         <TouchableOpacity 
@@ -533,14 +529,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   orangeBox: {
-    backgroundColor: "rgba(230, 76, 25, 0.2)", // translucent orange
-    borderRadius: 50, // makes it pill/tube shaped
+    backgroundColor: "rgba(230, 76, 25, 0.2)", 
+    borderRadius: 50, 
     paddingVertical: 8,
     paddingHorizontal: 16,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "rgba(255, 105, 53, 0.6)", // subtle border to give structure
+    borderColor: "rgba(255, 105, 53, 0.6)", 
   },
   
   orangeBoxText: {

@@ -6,7 +6,6 @@ import { useNavigation, NavigationProp } from "@react-navigation/native"
 import { ChevronForwardIcon } from "../assets/icons"
 import { RootStackParamList } from "../navigation/types"
 import Header from "../components/navigation/Header"
-import TabBar from "../components/navigation/TabBar"
 import { useWatchlist } from "../context/WatchlistContext"
 
 interface Watchlist {
@@ -57,8 +56,6 @@ const WatchlistScreen = () => {
           }
         />
       </View>
-
-      <TabBar />
     </View>
   )
 }

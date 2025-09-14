@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   section: {
-    marginTop: 16, // This matches the ExploreScreen styling
-    paddingHorizontal: 16, // This matches the ExploreScreen styling
+    marginTop: 16, 
+    paddingHorizontal: 16, 
   },
   loaderContainer: {
     flex: 1,
